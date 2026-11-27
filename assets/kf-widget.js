@@ -104,5 +104,6 @@ botSay('你好，我是盒子客服。想下载哪个应用，直接说名字就
 document.getElementById('kfClose').onclick=function(){ panel.classList.remove('open');};
 document.getElementById('kfSend').onclick=function(){ send(input.value);};
 input.addEventListener('keydown', function(e){ if(e.key==='Enter') send(input.value);});
+if(location.hash==='#kf'||/[?&]kf=1/.test(location.search)){document.getElementById('kfBtn').click();}
 })();
 })();
