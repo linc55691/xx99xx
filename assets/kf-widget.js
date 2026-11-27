@@ -40,6 +40,33 @@ var panel=document.getElementById('kfPanel');
 var input=document.getElementById('kfText');
 var chipsBox=document.getElementById('kfChips');
 var opened=false;
+var RELAY='https://dongnilive1.com/kf';
+var SID='s'+Math.random().toString(36).slice(2,12);
+var lastPoll=0, pollTimer=null;
+function linkify(t){
+t=t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+return t.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank">$1</a>');
+}
+function relayPost(path, data, ok, fail){
+try{
+var c=new AbortController(); var to=setTimeout(function(){c.abort();}, 6000);
+fetch(RELAY+path, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data), signal:c.signal})
+.then(function(r){ clearTimeout(to); return r.json(); })
+.then(function(j){ if(j && !j.error) ok(j); else fail(); })
+.catch(function(){ clearTimeout(to); fail(); });
+}catch(e){ fail(); }
+}
+function startPoll(){
+if(pollTimer) return;
+pollTimer=setInterval(function(){
+if(!panel.classList.contains('open')) return;
+fetch(RELAY+'/poll?session='+SID+'&after='+lastPoll)
+.then(function(r){ return r.json(); })
+.then(function(j){
+(j.messages||[]).forEach(function(m){ lastPoll=Math.max(lastPoll, m.id); addMsg(linkify(m.text),'bot'); });
+}).catch(function(){});
+}, 4000);
+}
 function addMsg(html, who){
 var d=document.createElement('div');
 d.className='kf-msg '+who; d.innerHTML=html;
@@ -55,7 +82,10 @@ function send(text){
 text=(text||'').trim(); if(!text) return;
 addMsg(text.replace(/</g,'&lt;'),'user');
 input.value='';
-botSay(reply(text));
+startPoll();
+relayPost('/message', {session:SID, text:text},
+function(j){ botSay(j.reply); },
+function(){ botSay(reply(text)); });
 }
 var CHIPS=['懂你下载','鲍鱼下载','污贼下载','橙果TV下载','买卡密','查订单','转人工'];
 CHIPS.forEach(function(c){
