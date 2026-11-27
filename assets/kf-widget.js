@@ -79,20 +79,20 @@ t.className='kf-typing'; t.textContent='对方正在输入...';
 body.appendChild(t); body.scrollTop=body.scrollHeight;
 setTimeout(function(){ body.removeChild(t); addMsg(html,'bot');}, 600);
 }
-function send(text){
+function send(text, isChip){
 text=(text||'').trim(); if(!text) return;
 addMsg(text.replace(/</g,'&lt;'),'user');
 input.value='';
 startPoll();
-relayPost('/message', {session:SID, text:text},
+relayPost('/message', {session:SID, text:text, chip:!!isChip},
 function(j){ if(j.escalated) escalated=true; if(j.reply) botSay(j.reply); },
-function(){ if(!escalated) botSay(reply(text)); });
+function(){ if(!escalated||isChip) botSay(reply(text)); });
 }
 var CHIPS=['懂你下载','鲍鱼下载','污贼下载','橙果TV下载','买卡密','查订单','转人工'];
 CHIPS.forEach(function(c){
 var b=document.createElement('button');
 b.className='kf-chip'; b.textContent=c;
-b.onclick=function(){ send(c);};
+b.onclick=function(){ send(c, true);};
 chipsBox.appendChild(b);
 });
 document.getElementById('kfBtn').onclick=function(){
