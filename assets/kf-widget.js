@@ -43,7 +43,7 @@ var chipsBox=document.getElementById('kfChips');
 var opened=false;
 var RELAY='https://dongnilive1.com/kf';
 var SID='s'+Math.random().toString(36).slice(2,12);
-var lastPoll=0, pollTimer=null;
+var lastPoll=0, pollTimer=null; var escalated=false;
 function linkify(t){
 t=t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
 return t.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank">$1</a>');
@@ -85,8 +85,8 @@ addMsg(text.replace(/</g,'&lt;'),'user');
 input.value='';
 startPoll();
 relayPost('/message', {session:SID, text:text},
-function(j){ botSay(j.reply); },
-function(){ botSay(reply(text)); });
+function(j){ if(j.escalated) escalated=true; if(j.reply) botSay(j.reply); },
+function(){ if(!escalated) botSay(reply(text)); });
 }
 var CHIPS=['懂你下载','鲍鱼下载','污贼下载','橙果TV下载','买卡密','查订单','转人工'];
 CHIPS.forEach(function(c){
