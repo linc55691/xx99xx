@@ -16,7 +16,7 @@ return s;
 }
 var APPS=[
 {k:['懂你','dongni'], m:function(){return appMsg('懂你盒子','https://dn1.live/?promo_code=226226','226226','苹果安卓都能装');}},
-{k:['鲍鱼','baoyu','鲍鱼盒子'], m:function(){return appMsg('鲍鱼盒子','https://13y99.com/#/?&uid=50187039','5018703','');}},
+{k:['鲍鱼','baoyu','鲍鱼盒子'], m:function(){return appMsg('鲍鱼盒子','https://13y99.com/#/?&uid=50187039','50187039','');}},
 {k:['污贼','乌贼','wuzei'], m:function(){return appMsg('污贼盒子','https://www.wz12.xyz/#/?code=180000','180000','备用地址：<a href="https://www.wz25.xyz/#/?code=180000" target="_blank">wz25.xyz</a>');}},
 {k:['橙果','chengguo'], m:function(){return appMsg('橙果TV','https://wwbao.lanzn.com/b01bjfrpmh','226226','里面有安卓和苹果两个安装包；在线看剧不用装：<a href="https://cgsp5.com" target="_blank">cgsp5.com</a>');}},
 {k:['小红帽','xiaohongmao'], m:function(){return appMsg('小红帽直播','https://xhma.club/96085681','','这个不用邀请码');}},
@@ -30,7 +30,7 @@ if(/下载|安装包|怎么下|在哪下/.test(q)) return '你要下载哪个应
 if(/买卡|卡密|购买|充值|多少钱|价格|月卡|季卡|年卡|怎么买/.test(q)) return '买卡点这里：<a href="'+SHOP+'" target="_blank">发卡网</a>，月卡、季卡、年卡都有，价钱点开就能看到。付完款卡密直接显示出来。';
 if(/查单|订单|查订单|找不到卡|付了款|没收到|付款/.test(q)) return '查单点这里：<a href="'+ORDER+'" target="_blank">订单查询</a>，输入下单时留的联系方式，就能查到卡密。查不到就说一声，我转人工。';
 if(/安装|怎么装|打不开|闪退|进不去|安装失败/.test(q)) return '先点下载地址把安装包装好，打开注册填邀请码。安卓装不上，先在手机设置里允许安装未知应用；苹果按提示装描述文件。还不行就说一声，我转人工。';
-if(/邀请码|邀请|码/.test(q)) return '注册时填的邀请码：懂你 226226，鲍鱼 5018703，污贼 180000，橙果 226226。多彩和小红帽不用邀请码。';
+if(/邀请码|邀请|码/.test(q)) return '注册时填的邀请码：懂你 226226，鲍鱼 50187039，污贼 180000，橙果 226226。多彩和小红帽不用邀请码。';
 if(/续费|到期|续期|过期/.test(q)) return '没有单独的续期卡，到期了再买一张月卡就行，买卡点这里：<a href="'+SHOP+'" target="_blank">发卡网</a>。';
 if(/你好|在吗|^hi$|hello|在不在/.test(q)) return '你好，我是盒子客服。想下载哪个应用，直接说名字就行；买卡、查单也可以问我。';
 return '这个问题我答不上来，我转给人工客服，你稍等一下。也可以直接点这里转人工：<a href="https://t.me/box2262" target="_blank">@box2262</a>';
